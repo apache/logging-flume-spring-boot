@@ -37,4 +37,4 @@ github:
     - library
     - flume
   protected_branches:
-    trunk: {}
+    main: {}
