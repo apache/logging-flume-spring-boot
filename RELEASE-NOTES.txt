@@ -1,0 +1,33 @@
+Apache Flume Spring Boot 2.0.0
+
+CONTENTS
+1. What is Apache Flume Spring Boot
+2. Major changes in this Release
+3. How to Get Involved
+4. How to Report Issues
+
+1. What is Apache Flume Spring Boot
+Flume is a distributed, reliable, and available service for
+efficiently collecting, aggregating, and moving large amounts of event
+data. Flume Spring Boot allows Flume to be packaged and configured as a
+"nomral" Spring boot application.
+
+2. Major changes in this Release
+For a detailed list of changes, please see the CHANGELOG file included
+in this distribution.
+
+Apache Flume Spring Boot 2.0.0 modifies how application configuration is
+wired into Spring. Prior releases used a mechanism that prevented Spring Cloud
+from iniitializing properly. Applications should now add a declaration for
+org.springframework.boot.autoconfigure.EnableAutoConfiguration to META-INF/spring.properties
+that references a configuration class that contains a @ComponentScan annotation.
+
+4. How to Get Involved
+The Apache Flume project really needs and appreciates any contributions,
+including documentation help, source code and feedback. If you are interested
+in contributing, please visit:
+https://cwiki.apache.org/confluence/display/FLUME/How+to+Contribute
+
+5. How to Report Issues
+The Apache Flume Spring Boot project uses GitHub issues for issue tracking. Please see
+https://github.com/apache/flume-spring-boot/issues

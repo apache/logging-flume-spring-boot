@@ -1,0 +1,7 @@
+Release Notes - Flume Spring Boot - Version 2.0.0
+
+** Bug
+    * [#1] - Require Applications to define a configuration class containing the appropriate ComponentScan declaration in spring.factories.
+
+
+
