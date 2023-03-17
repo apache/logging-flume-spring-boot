@@ -44,7 +44,10 @@ limitations under the License.
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <module.name>org.apache.flume.spring.boot</module.name>
+    <mvn-gpg-plugin.version>1.6</mvn-gpg-plugin.version>
+    <mvn-javadoc-plugin.version>2.9</mvn-javadoc-plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <rat.version>0.12</rat.version>
     <slf4j.version>1.7.32</slf4j.version>
     <spotbugs-maven-plugin.version>4.7.2.1</spotbugs-maven-plugin.version>
     <spotless-maven-plugin.version>2.27.2</spotless-maven-plugin.version>
@@ -183,12 +186,99 @@ limitations under the License.
   <modules>
     <module>flume-spring-boot</module>
   </modules>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.rat</groupId>
+        <artifactId>apache-rat-plugin</artifactId>
+        <version>${rat.version}</version>
+        <configuration>
+          <excludes>
+            <exclude>**/.idea/</exclude>
+            <exclude>**/*.iml</exclude>
+            <exclude>src/main/resources/META-INF/services/**/*</exclude>
+            <exclude>**/nb-configuration.xml</exclude>
+            <exclude>.git/</exclude>
+            <exclude>patchprocess/</exclude>
+            <exclude>.gitignore</exclude>
+            <exclude>**/*.yml</exclude>
+            <exclude>**/*.yaml</exclude>
+            <exclude>**/*.json</exclude>
+            <!-- ASF jenkins box puts the Maven repo in our root directory. -->
+            <exclude>.repository/</exclude>
+            <exclude>**/*.diff</exclude>
+            <exclude>**/*.patch</exclude>
+            <exclude>**/*.avsc</exclude>
+            <exclude>**/*.avro</exclude>
+            <exclude>**/docs/**</exclude>
+            <exclude>**/test/resources/**</exclude>
+            <exclude>**/.settings/*</exclude>
+            <exclude>**/.classpath</exclude>
+            <exclude>**/.project</exclude>
+            <exclude>**/target/**</exclude>
+            <exclude>**/derby.log</exclude>
+            <exclude>**/metastore_db/</exclude>
+            <exclude>.mvn/**</exclude>
+            <exclude>**/exclude-pmd.properties</exclude>
+          </excludes>
+          <consoleOutput>true</consoleOutput>
+        </configuration>
+        <executions>
+          <execution>
+            <id>verify.rat</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
   <profiles>
     <profile>
       <id>release</id>
       <modules>
         <module>flume-spring-boot-dist</module>
       </modules>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>${mvn-gpg-plugin.version}</version>
+            <executions>
+              <execution>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+                <configuration>
+                  <keyname>${SigningUserName}</keyname>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>${mvn-javadoc-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>javadoc-jar</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>aggregate-jar</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <additionalparam>-Xdoclint:none</additionalparam>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 
