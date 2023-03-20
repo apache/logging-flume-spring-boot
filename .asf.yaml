@@ -23,7 +23,7 @@ notifications:
   jira_options: link label
 github:
   description: "Apache Flume is a distributed, reliable, and available service for efficiently collecting, aggregating, and moving large amounts of log-like data"
-  homepage: https://logging.apache.org/flume/
+  homepage: https://flume.apache.org/
   features:
     issues: true
   del_branch_on_merge: true
