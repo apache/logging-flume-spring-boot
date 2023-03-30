@@ -2,7 +2,7 @@ Apache Flume Spring Boot 2.0.0
 
 CONTENTS
 1. What is Apache Flume Spring Boot
-2. Major changes in this Release
+2. Major Changes in This Release
 3. How to Get Involved
 4. How to Report Issues
 
@@ -10,9 +10,9 @@ CONTENTS
 Flume is a distributed, reliable, and available service for
 efficiently collecting, aggregating, and moving large amounts of event
 data. Flume Spring Boot allows Flume to be packaged and configured as a
-"nomral" Spring boot application.
+regular Spring boot application.
 
-2. Major changes in this Release
+2. Major Changes in This Release
 For a detailed list of changes, please see the CHANGELOG file included
 in this distribution.
 
