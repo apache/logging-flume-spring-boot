@@ -61,8 +61,8 @@ public class AppConfig extends AbstractFlumeConfiguration {
 
   @Bean
   public SourceRunner seqSource(Channel memoryChannel, Map<String, String> source1Properties) {
-    ChannelSelector selector = new ReplicatingChannelSelector();
-    selector.setChannels(listOf(memoryChannel));
+    ChannelSelector selector = createChannelSelector(ReplicatingChannelSelector.class, listOf(memoryChannel),
+            null);
     return configureSource("source1", SequenceGeneratorSource.class, selector,
         source1Properties);
   }

@@ -106,6 +106,7 @@ public abstract class AbstractFlumeConfiguration {
   }
 
   protected ChannelSelector createChannelSelector(Class<? extends ChannelSelector> clazz,
+                                                  List<Channel> channels,
                                                   Map<String, String> params) {
     ChannelSelector selector;
     try {
@@ -113,6 +114,7 @@ public abstract class AbstractFlumeConfiguration {
     } catch (Exception ex) {
       throw new FlumeException("Unable to create channel selector " + clazz.getName(), ex);
     }
+    selector.setChannels(channels);
     Configurables.configure(selector, createContext(params));
     return selector;
   }
