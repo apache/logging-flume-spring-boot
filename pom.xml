@@ -40,7 +40,7 @@ limitations under the License.
     <checksum-maven-plugin.version>1.11</checksum-maven-plugin.version>
     <findsecbugs-plugin.version>1.12.0</findsecbugs-plugin.version>
     <flume.version>1.11.0</flume.version>
-    <log4j.version>2.23.0</log4j.version>
+    <log4j.version>2.25.3</log4j.version>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <module.name>org.apache.flume.spring.boot</module.name>
