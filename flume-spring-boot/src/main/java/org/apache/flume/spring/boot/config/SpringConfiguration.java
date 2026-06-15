@@ -28,7 +28,12 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Map;
 
 /**
- *
+ * This is the heart of a Flume application. Use your custom Java configuration
+ * file to define the Channels, SinkRunners, and SourceRunners as beans.
+ * Your configuration can define each channel, sinkRunner, and sourceRunner
+ * as individual beans in which case Spring will automatically add them to the
+ * relevant map using the bean name as the key, or you can provide bean methods
+ * that return the entire map.
  */
 @Configuration
 public class SpringConfiguration {

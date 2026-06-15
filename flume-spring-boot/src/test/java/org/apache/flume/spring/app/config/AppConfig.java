@@ -18,6 +18,7 @@ package org.apache.flume.spring.app.config;
 
 import org.apache.flume.Channel;
 import org.apache.flume.ChannelSelector;
+import org.apache.flume.Context;
 import org.apache.flume.Sink;
 import org.apache.flume.SinkRunner;
 import org.apache.flume.SourceRunner;
@@ -27,10 +28,11 @@ import org.apache.flume.sink.DefaultSinkProcessor;
 import org.apache.flume.sink.NullSink;
 import org.apache.flume.source.SequenceGeneratorSource;
 import org.apache.flume.spring.boot.config.AbstractFlumeConfiguration;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +40,7 @@ import java.util.Map;
 /**
  *
  */
-@Configuration
+@AutoConfiguration
 @ComponentScan(basePackages="org.apache.flume.spring.app")
 public class AppConfig extends AbstractFlumeConfiguration {
 
@@ -55,16 +57,19 @@ public class AppConfig extends AbstractFlumeConfiguration {
   }
 
   @Bean
-  public Channel memoryChannel(Map<String, String> channel1Properties) {
+  public Channel memoryChannel(@Qualifier("channel1Properties")Map<String, String> channel1Properties) {
     return configureChannel("channel1", MemoryChannel.class, channel1Properties);
   }
 
   @Bean
-  public SourceRunner seqSource(Channel memoryChannel, Map<String, String> source1Properties) {
-    ChannelSelector selector = createChannelSelector(ReplicatingChannelSelector.class, listOf(memoryChannel),
-            null);
-    return configureSource("source1", SequenceGeneratorSource.class, selector,
+  public SourceRunner seqSource(Channel memoryChannel, @Qualifier("source1Properties")Map<String, String> source1Properties) {
+    ChannelSelector selector = new ReplicatingChannelSelector();
+    selector.setChannels(listOf(memoryChannel));
+    SourceRunner runner = configureSource("source1", SequenceGeneratorSource.class, selector,
         source1Properties);
+    Context context = source1Properties != null ? new Context(source1Properties) : new Context();
+    runner.getSource().getChannelProcessor().configure(context);
+    return runner;
   }
 
   @Bean
