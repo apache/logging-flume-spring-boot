@@ -33,7 +33,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
+ * The primarily provides helper methods to create and configure the various Flume components.
+ * The do not have to be used.
  */
 public abstract class AbstractFlumeConfiguration {
 
@@ -60,6 +61,7 @@ public abstract class AbstractFlumeConfiguration {
     }
     source.setName(name);
     Configurables.configure(source, createContext(params));
+    ChannelProcessor channelProcessor = new ChannelProcessor(selector);
     source.setChannelProcessor(new ChannelProcessor(selector));
     return SourceRunner.forSource(source);
   }
@@ -105,17 +107,18 @@ public abstract class AbstractFlumeConfiguration {
     return sink;
   }
 
-  protected ChannelSelector createChannelSelector(Class<? extends ChannelSelector> clazz,
-                                                  Map<String, String> params) {
-    ChannelSelector selector;
-    try {
-      selector = clazz.newInstance();
-    } catch (Exception ex) {
-      throw new FlumeException("Unable to create channel selector " + clazz.getName(), ex);
+    protected ChannelSelector createChannelSelector(Class<? extends ChannelSelector> clazz,
+                                                    List<Channel> channels, Map<String, String> params) {
+        ChannelSelector selector;
+        try {
+            selector = clazz.newInstance();
+        } catch (Exception ex) {
+            throw new FlumeException("Unable to create channel selector " + clazz.getName(), ex);
+        }
+        selector.setChannels(channels);
+        Configurables.configure(selector, createContext(params));
+        return selector;
     }
-    Configurables.configure(selector, createContext(params));
-    return selector;
-  }
 
   /**
    * Creates a List from a Varargs array.
