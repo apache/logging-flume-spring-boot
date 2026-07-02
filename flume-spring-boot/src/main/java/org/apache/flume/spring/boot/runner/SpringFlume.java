@@ -17,10 +17,10 @@
 package org.apache.flume.spring.boot.runner;
 
 import com.google.common.collect.Lists;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import java.util.List;
+import org.apache.flume.conf.internal.SuppressFBWarnings;
 import org.apache.flume.lifecycle.LifecycleAware;
 import org.apache.flume.node.Application;
 import org.apache.flume.node.MaterializedConfiguration;
