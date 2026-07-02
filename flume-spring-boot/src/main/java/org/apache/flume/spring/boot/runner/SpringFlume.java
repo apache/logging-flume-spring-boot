@@ -20,6 +20,7 @@ import com.google.common.collect.Lists;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import java.util.List;
+import org.apache.flume.conf.internal.SuppressFBWarnings;
 import org.apache.flume.lifecycle.LifecycleAware;
 import org.apache.flume.node.Application;
 import org.apache.flume.node.MaterializedConfiguration;
@@ -36,6 +37,7 @@ public class SpringFlume {
     private final Application application;
 
     @Autowired
+    @SuppressFBWarnings("EI_EXPOSE_REP2")
     public SpringFlume(MaterializedConfiguration configuration) {
         this.materializedConfiguration = configuration;
         List<LifecycleAware> components = Lists.newArrayList();
