@@ -35,6 +35,7 @@ import org.apache.flume.channel.ReplicatingChannelSelector;
 import org.apache.flume.conf.Configurables;
 import org.apache.flume.conf.channel.ChannelType;
 import org.apache.flume.interceptor.Interceptor;
+import org.apache.flume.sink.DefaultSinkProcessor;
 
 /**
  * The primarily provides helper methods to create and configure the various Flume components.
@@ -137,6 +138,23 @@ public abstract class AbstractFlumeConfiguration {
         processor.setSinks(sinks);
         Configurables.configure(processor, createContext(params));
         return processor;
+    }
+
+    /**
+     * Set up the SinkProcessors and SinkRunners for a list of Sinks where each sink handles a channel.
+     * @param sinks The List of Sinks.
+     * @return A Map of the SinkRunners
+     */
+    protected Map<String, SinkRunner> createSinkRunners(List<Sink> sinks) {
+        Map<String, SinkRunner> sinkRunners = new HashMap<>();
+        for (Sink sink : sinks) {
+            SinkProcessor processor = new DefaultSinkProcessor();
+            processor.setSinks(List.of(sink));
+            Context context = createContext(Map.of());
+            processor.configure(context);
+            sinkRunners.put(sink.getName(), new SinkRunner(processor));
+        }
+        return sinkRunners;
     }
 
     /**
