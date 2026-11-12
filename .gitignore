@@ -12,36 +12,42 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-##
+
+# Maven
+target/
+.flattened-pom.xml
+/.mvn/extensions.xml
+/.mvn/wrapper/maven-wrapper.jar
+.surefire-*
+
+# Node.js (used by `frontend-maven-plugin` in `logging-parent`)
+node/
+node_modules/
+package-lock.json
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
 
 # Eclipse
 .project
-.settings
 .classpath
+.settings/
 .factorypath
 /.metadata/
 .cache-main
 .cache-tests
 
-# IntelliJ IDEA
-.idea
-**/*.iml
-
 # Visual Studio Code
-.vscode
+.vscode/
 
-# Maven
-/.mvn/wrapper/maven-wrapper.jar
-/.mvn/extensions.xml
-.flattened-pom.xml
-target/
-.surefire-*
+# NetBeans
+nb-configuration.xml
 
-# Node.js
-node
-node_modules
-package-lock.json
+# Editor backup files
+*~
+*#
 
 # macOS
 .DS_Store
-
